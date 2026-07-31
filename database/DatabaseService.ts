@@ -352,6 +352,299 @@ class DatabaseServiceImpl {
   }
 
   /**
+   * Get all products (legacy method - loads everything)
+   * @deprecated Use getProductsPaginated() for better performance
+   */
+  public getAllProducts(): Product[] {
+    const stmt = this.db!.prepare("SELECT * FROM products");
+    const rows = stmt.all() as any[];
+    return rows.map((p) => {
+      let variants = [];
+      try {
+        variants = p.variants ? JSON.parse(p.variants) : [];
+      } catch (e) {
+        variants = [];
+      }
+      return {
+        id: p.id,
+        name: p.name,
+        arabicName: p.arabicName || undefined,
+        category: p.category || undefined,
+        barcode: p.barcode || undefined,
+        price: p.price,
+        image: p.image || undefined,
+        variants: variants,
+        imagePath: p.imagePath || undefined,
+        purchasePrice: p.purchasePrice !== null ? p.purchasePrice : undefined,
+        sellingPrice: p.sellingPrice !== null ? p.sellingPrice : undefined,
+        status: p.status || undefined
+      };
+    });
+  }
+
+  /**
+   * Get products with pagination and optional search
+   */
+  public getProductsPaginated(page: number = 1, limit: number = 50, search?: string): { products: Product[], totalItems: number, totalPages: number, currentPage: number } {
+    const offset = (page - 1) * limit;
+    
+    // Build search condition if provided
+    let whereClause = "";
+    let params: any[] = [];
+    if (search) {
+      whereClause = " WHERE name LIKE ? OR barcode LIKE ? OR arabicName LIKE ?";
+      const searchTerm = `%${search}%`;
+      params = [searchTerm, searchTerm, searchTerm];
+    }
+    
+    // Get total count
+    const countStmt = this.db!.prepare(`SELECT COUNT(*) as count FROM products${whereClause}`);
+    const countResult = countStmt.get(...params) as any;
+    const totalItems = countResult.count;
+    const totalPages = Math.ceil(totalItems / limit);
+    
+    // Get paginated results
+    const selectStmt = this.db!.prepare(`SELECT * FROM products${whereClause} ORDER BY name LIMIT ? OFFSET ?`);
+    const rows = selectStmt.all(...params, limit, offset) as any[];
+    
+    const products = rows.map((p) => {
+      let variants = [];
+      try {
+        variants = p.variants ? JSON.parse(p.variants) : [];
+      } catch (e) {
+        variants = [];
+      }
+      return {
+        id: p.id,
+        name: p.name,
+        arabicName: p.arabicName || undefined,
+        category: p.category || undefined,
+        barcode: p.barcode || undefined,
+        price: p.price,
+        image: p.image || undefined,
+        variants: variants,
+        imagePath: p.imagePath || undefined,
+        purchasePrice: p.purchasePrice !== null ? p.purchasePrice : undefined,
+        sellingPrice: p.sellingPrice !== null ? p.sellingPrice : undefined,
+        status: p.status || undefined
+      };
+    });
+    
+    return {
+      products,
+      totalItems,
+      totalPages,
+      currentPage: page
+    };
+  }
+
+  /**
+   * Get single product by barcode using indexed lookup
+   */
+  public getProductByBarcode(barcode: string): Product | null {
+    const stmt = this.db!.prepare("SELECT * FROM products WHERE barcode = ?");
+    const row = stmt.get(barcode) as any;
+    
+    if (!row) {
+      return null;
+    }
+    
+    let variants = [];
+    try {
+      variants = row.variants ? JSON.parse(row.variants) : [];
+    } catch (e) {
+      variants = [];
+    }
+    
+    return {
+      id: row.id,
+      name: row.name,
+      arabicName: row.arabicName || undefined,
+      category: row.category || undefined,
+      barcode: row.barcode || undefined,
+      price: row.price,
+      image: row.image || undefined,
+      variants: variants,
+      imagePath: row.imagePath || undefined,
+      purchasePrice: row.purchasePrice !== null ? row.purchasePrice : undefined,
+      sellingPrice: row.sellingPrice !== null ? row.sellingPrice : undefined,
+      status: row.status || undefined
+    };
+  }
+
+  /**
+   * Get all sales (legacy method - loads everything)
+   * @deprecated Use getSalesPaginated() for better performance
+   */
+  public getAllSales(): Sale[] {
+    const stmt = this.db!.prepare("SELECT * FROM sales ORDER BY dateTime DESC");
+    const rows = stmt.all() as any[];
+    return rows.map((s) => {
+      let items = [];
+      try {
+        items = s.items ? JSON.parse(s.items) : [];
+      } catch (e) {
+        items = [];
+      }
+      return {
+        id: s.id,
+        receiptNo: s.receiptNo,
+        dateTime: s.dateTime,
+        userId: s.userId || undefined,
+        staffName: s.staffName || undefined,
+        items: items,
+        subtotal: s.subtotal,
+        discountType: s.discountType || undefined,
+        discountValue: s.discountValue !== null ? s.discountValue : undefined,
+        discountAmount: s.discountAmount !== null ? s.discountAmount : undefined,
+        taxRate: s.taxRate !== null ? s.taxRate : undefined,
+        taxAmount: s.taxAmount !== null ? s.taxAmount : undefined,
+        total: s.total,
+        paymentMethod: s.paymentMethod || undefined,
+        amountPaid: s.amountPaid !== null ? s.amountPaid : undefined,
+        change: s.change !== null ? s.change : undefined
+      };
+    });
+  }
+
+  /**
+   * Get sales with pagination and optional date filtering
+   */
+  public getSalesPaginated(page: number = 1, limit: number = 50, startDate?: string, endDate?: string): { sales: Sale[], totalItems: number, totalPages: number, currentPage: number } {
+    const offset = (page - 1) * limit;
+    
+    // Build date filter conditions
+    let whereClause = "";
+    let params: any[] = [];
+    
+    if (startDate && endDate) {
+      whereClause = " WHERE dateTime >= ? AND dateTime <= ?";
+      params = [startDate, endDate];
+    } else if (startDate) {
+      whereClause = " WHERE dateTime >= ?";
+      params = [startDate];
+    } else if (endDate) {
+      whereClause = " WHERE dateTime <= ?";
+      params = [endDate];
+    }
+    
+    // Get total count
+    const countStmt = this.db!.prepare(`SELECT COUNT(*) as count FROM sales${whereClause}`);
+    const countResult = countStmt.get(...params) as any;
+    const totalItems = countResult.count;
+    const totalPages = Math.ceil(totalItems / limit);
+    
+    // Get paginated results
+    const selectStmt = this.db!.prepare(`SELECT * FROM sales${whereClause} ORDER BY dateTime DESC LIMIT ? OFFSET ?`);
+    const rows = selectStmt.all(...params, limit, offset) as any[];
+    
+    const sales = rows.map((s) => {
+      let items = [];
+      try {
+        items = s.items ? JSON.parse(s.items) : [];
+      } catch (e) {
+        items = [];
+      }
+      return {
+        id: s.id,
+        receiptNo: s.receiptNo,
+        dateTime: s.dateTime,
+        userId: s.userId || undefined,
+        staffName: s.staffName || undefined,
+        items: items,
+        subtotal: s.subtotal,
+        discountType: s.discountType || undefined,
+        discountValue: s.discountValue !== null ? s.discountValue : undefined,
+        discountAmount: s.discountAmount !== null ? s.discountAmount : undefined,
+        taxRate: s.taxRate !== null ? s.taxRate : undefined,
+        taxAmount: s.taxAmount !== null ? s.taxAmount : undefined,
+        total: s.total,
+        paymentMethod: s.paymentMethod || undefined,
+        amountPaid: s.amountPaid !== null ? s.amountPaid : undefined,
+        change: s.change !== null ? s.change : undefined
+      };
+    });
+    
+    return {
+      sales,
+      totalItems,
+      totalPages,
+      currentPage: page
+    };
+  }
+
+  /**
+   * Get dashboard stats using SQL aggregation (optimized - no full table scan)
+   */
+  public getDashboardStats(): { dailyRevenue: number, dailySalesCount: number, unpaidExpenses: number, dailyExpenses: number, profitAndLoss: { revenue: number, expenses: number, profit: number }, topProducts: Array<{name: string, quantity: number, revenue: number}> } {
+    const todayString = new Date().toISOString().slice(0, 10);
+    
+    // Daily stats using SQL
+    const dailyStatsStmt = this.db!.prepare(`
+      SELECT 
+        COUNT(*) as salesCount,
+        COALESCE(SUM(total), 0) as totalRevenue
+      FROM sales 
+      WHERE dateTime LIKE ?
+    `);
+    const dailyStats = dailyStatsStmt.get(todayString + '%') as any;
+    const dailyRevenue = dailyStats.totalRevenue || 0;
+    const dailySalesCount = dailyStats.salesCount || 0;
+    
+    // Daily expenses using SQL
+    const dailyExpensesStmt = this.db!.prepare(`
+      SELECT COALESCE(SUM(amount), 0) as totalExpenses
+      FROM expenses 
+      WHERE date = ?
+    `);
+    const dailyExpensesResult = dailyExpensesStmt.get(todayString) as any;
+    const dailyExpenses = dailyExpensesResult.totalExpenses || 0;
+    
+    // Total revenues using SQL (for profitAndLoss.revenue)
+    const totalRevenueStmt = this.db!.prepare(`SELECT COALESCE(SUM(total), 0) as total FROM sales`);
+    const totalRevenues = (totalRevenueStmt.get() as any).total || 0;
+    
+    // Total expenses using SQL (for profitAndLoss.expenses and unpaidExpenses)
+    const totalExpensesStmt = this.db!.prepare(`SELECT COALESCE(SUM(amount), 0) as total FROM expenses`);
+    const totalExpenses = (totalExpensesStmt.get() as any).total || 0;
+    
+    // Calculate profit
+    const netProfit = totalRevenues - totalExpenses;
+    
+    // Top products using SQL aggregation
+    const topProductsStmt = this.db!.prepare(`
+      SELECT 
+        json_extract(json_each.value, '$.productName') as productName,
+        SUM(json_extract(json_each.value, '$.quantity')) as totalQty,
+        SUM(json_extract(json_each.value, '$.total')) as totalRev
+      FROM sales, json_each(sales.items)
+      GROUP BY productName
+      ORDER BY totalQty DESC
+      LIMIT 5
+    `);
+    const topProductsRows = topProductsStmt.all() as any[];
+    const topProducts = topProductsRows.map((row) => ({
+      name: row.productName,
+      quantity: row.totalQty || 0,
+      revenue: Number((row.totalRev || 0).toFixed(2))
+    }));
+    
+    // Return structure matching DashboardStats interface exactly
+    return {
+      dailyRevenue: Number(dailyRevenue.toFixed(2)),
+      dailySalesCount,
+      unpaidExpenses: Number(totalExpenses.toFixed(2)), // Same as total expenses (all expenses are considered unpaid until paid)
+      dailyExpenses: Number(dailyExpenses.toFixed(2)),
+      profitAndLoss: {
+        revenue: Number(totalRevenues.toFixed(2)),
+        expenses: Number(totalExpenses.toFixed(2)),
+        profit: Number(netProfit.toFixed(2))
+      },
+      topProducts
+    };
+  }
+
+  /**
    * Read and parse complete AppDatabase from SQLite instance.
    */
   private readFromSqliteConnection(sqliteDb: Database.Database): AppDatabase {
