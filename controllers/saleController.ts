@@ -5,12 +5,26 @@ import { checkRequiredFields, checkArray } from "../utils/validation";
 import { LoggerService } from "../services/LoggerService";
 import {
   getAllSales,
+  getSalesPaginated,
   createSale,
   getAllProducts,
   getSalesCount
 } from "../database";
 
 export const getSales = asyncHandler(async (req: Request, res: Response) => {
+  // Support pagination query params for new clients
+  const page = req.query.page ? parseInt(req.query.page as string, 10) : undefined;
+  const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : undefined;
+  const startDate = req.query.startDate as string | undefined;
+  const endDate = req.query.endDate as string | undefined;
+  
+  // If pagination params provided, use new optimized method
+  if (page !== undefined || limit !== undefined) {
+    const result = getSalesPaginated(page || 1, limit || 50, startDate, endDate);
+    return res.json(result);
+  }
+  
+  // Otherwise, preserve backward compatibility with legacy method
   res.json(getAllSales());
 });
 

@@ -4,13 +4,46 @@ import { AppError, asyncHandler } from "../middleware/error";
 import { checkRequiredFields, checkArray } from "../utils/validation";
 import {
   getAllProducts,
+  getProductsPaginated,
+  getProductByBarcode,
   createProduct,
   updateProduct,
   deleteProduct
 } from "../database";
 
 export const getProducts = asyncHandler(async (req: Request, res: Response) => {
+  // Support pagination query params for new clients
+  const page = req.query.page ? parseInt(req.query.page as string, 10) : undefined;
+  const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : undefined;
+  const search = req.query.search as string | undefined;
+  
+  // If pagination params provided, use new optimized method
+  if (page !== undefined || limit !== undefined) {
+    const result = getProductsPaginated(page || 1, limit || 50, search);
+    return res.json(result);
+  }
+  
+  // Otherwise, preserve backward compatibility with legacy method
   res.json(getAllProducts());
+});
+
+/**
+ * Get single product by barcode (new endpoint)
+ */
+export const getProductByBarcodeHandler = asyncHandler(async (req: Request, res: Response) => {
+  const { barcode } = req.params;
+  
+  if (!barcode) {
+    throw new AppError("Barcode parameter is required / مطلوب رمز الباركود", 400);
+  }
+  
+  const product = getProductByBarcode(barcode);
+  
+  if (!product) {
+    throw new AppError("Product not found with this barcode / لم يتم العثور على منتج بهذا الباركود", 404);
+  }
+  
+  res.json(product);
 });
 
 export const postCreateProduct = asyncHandler(async (req: Request, res: Response) => {

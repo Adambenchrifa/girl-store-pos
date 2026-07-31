@@ -98,7 +98,7 @@ function startBackendServer() {
 // Health check to ensure port 3000 is accepting connections before removing Splash
 function checkServerReady(callback) {
   const req = http.get('http://localhost:3000/api/auth/needs-setup', (res) => {
-    if (res.statusCode === 200 || res.statusCode === 304 || res.statusCode === 404) {
+    if (res.statusCode === 200 || res.statusCode === 304) {
       callback(true);
     } else {
       setTimeout(() => checkServerReady(callback), 150);

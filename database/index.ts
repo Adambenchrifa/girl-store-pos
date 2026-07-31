@@ -399,6 +399,20 @@ export function getAllProducts(): Product[] {
   return db.products;
 }
 
+/**
+ * Get products with pagination (new optimized method)
+ */
+export function getProductsPaginated(page?: number, limit?: number, search?: string) {
+  return DatabaseService.getProductsPaginated(page, limit, search);
+}
+
+/**
+ * Get single product by barcode (new optimized method)
+ */
+export function getProductByBarcode(barcode: string): Product | null {
+  return DatabaseService.getProductByBarcode(barcode);
+}
+
 export function createProduct(product: Product) {
   const db = readDatabase();
   db.products.push(product);
@@ -437,6 +451,20 @@ export function getSalesCount(): number {
 export function getAllSales(): Sale[] {
   const db = readDatabase();
   return db.sales;
+}
+
+/**
+ * Get sales with pagination (new optimized method)
+ */
+export function getSalesPaginated(page?: number, limit?: number, startDate?: string, endDate?: string) {
+  return DatabaseService.getSalesPaginated(page, limit, startDate, endDate);
+}
+
+/**
+ * Get dashboard stats using SQL aggregation (new optimized method)
+ */
+export function getDashboardStats() {
+  return DatabaseService.getDashboardStats();
 }
 
 export function createSale(sale: Sale, updatedProducts: Product[]) {
