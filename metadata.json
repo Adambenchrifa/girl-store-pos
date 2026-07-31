@@ -1,0 +1,6 @@
+{
+  "name": "GIRL STORE POS",
+  "description": "An elegant, dark-themed clothing retail POS system for GIRL STORE. It includes catalog filtering by category, advanced variant (size and color) tracking, inventory control with low-stock warnings, checkout with discount and VAT options, tendering, transaction history, expense tracking, role-based login (Admin/Staff), printer/PDF receipt generation, and a reporting dashboard with a P&L sheet.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

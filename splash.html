@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Loading Girl Store POS</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #fafafa;
+      color: #1e293b;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      user-select: none;
+      -webkit-app-region: drag;
+    }
+
+    .container {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 24px;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+    }
+
+    .title {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: #0f172a;
+    }
+
+    .subtitle {
+      font-size: 11px;
+      color: #94a3b8;
+      font-family: monospace;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: -16px;
+    }
+
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border: 3px solid #e2e8f0;
+      border-top-color: #4f46e5;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    .status-text {
+      font-size: 13px;
+      font-weight: 500;
+      color: #64748b;
+      min-height: 20px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 16px;
+      font-size: 10px;
+      color: #cbd5e1;
+      font-weight: 400;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo-container">
+      <div class="logo-icon">G</div>
+      <div class="title">Girl Store <span style="color: #4f46e5;">POS</span></div>
+    </div>
+    <div class="subtitle">Commercial Point of Sale</div>
+    <div class="spinner"></div>
+    <div class="status-text" id="status">Starting POS backend engines...</div>
+  </div>
+  <div class="footer">Version 1.0.0 • Licensed Desktop client</div>
+
+  <script>
+    // Cycle through real-time loading messages
+    const statuses = [
+      "Initializing secure SQLite databases...",
+      "Configuring hardware drivers & printers...",
+      "Mounting POS transaction system...",
+      "Checking local sync drives...",
+      "Preparing secure desktop frame..."
+    ];
+    let index = 0;
+    const statusEl = document.getElementById('status');
+    setInterval(() => {
+      if (index < statuses.length) {
+        statusEl.textContent = statuses[index++];
+      }
+    }, 1200);
+  </script>
+</body>
+</html>

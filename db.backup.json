@@ -1,0 +1,17 @@
+{
+  "products": [],
+  "sales": [],
+  "expenses": [],
+  "users": [
+    {
+      "id": "admin",
+      "username": "admin",
+      "role": "Admin",
+      "name": "Administrator"
+    }
+  ],
+  "passwordHashes": {
+    "admin": "f7f376a1fcd0d0e11a10ed1b6577c99784d3a6bbe669b1d13fae43eb64634f6e"
+  },
+  "lastUpdated": "2026-07-21T18:49:00.000Z"
+}
