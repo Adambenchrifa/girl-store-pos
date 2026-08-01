@@ -336,36 +336,36 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0F0F0F] text-slate-200 font-sans flex flex-col select-none">
+    <div className="min-h-screen bg-[#0a0a0a] text-slate-200 font-sans flex flex-col select-none">
       
       {/* --- TOP HIGH-FIDELITY BRAND BANNER HEADER --- */}
-      <header className="bg-[#161616] border-b border-white/5 h-16 shrink-0 flex items-center justify-between px-6 relative z-30 shadow-md">
+      <header className="bg-[#111111]/80 backdrop-blur-xl border-b border-white/[0.04] h-16 shrink-0 flex items-center justify-between px-6 relative z-30 shadow-lg shadow-black/20">
         
         {/* Brand name and user info */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-5">
           <div className="flex flex-col">
             <h1 className="font-sans text-xl tracking-tight text-white font-light">
               GIRL STORE <span className="text-indigo-500 font-bold italic ml-1">.</span>
             </h1>
           </div>
 
-          <div className="h-6 w-[1px] bg-white/10 hidden sm:block" />
+          <div className="h-6 w-[1px] bg-white/[0.06] hidden sm:block" />
 
           {/* User label and Role badges */}
           <div className="hidden sm:flex items-center gap-2.5">
-            <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse border border-emerald-950" />
+            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
             <span className="text-xs font-medium text-slate-400">
               Active: <span className="text-slate-200 capitalize font-semibold">{currentUser.name}</span>
             </span>
             <span className={`text-[9px] uppercase tracking-wider font-mono font-bold px-2 py-0.5 rounded-md border ${
-              isAdmin ? 'bg-indigo-600/10 text-indigo-400 border-indigo-500/25' : 'bg-[#121212] text-slate-400 border-white/5'
+              isAdmin ? 'bg-indigo-600/15 text-indigo-300 border-indigo-500/30' : 'bg-white/[0.03] text-slate-400 border-white/[0.06]'
             }`}>
               {currentUser.role}
             </span>
 
             {/* USB Sync Status Indicator */}
-            <div className="flex items-center gap-1.5 px-2.5 py-1 bg-black/25 rounded-lg border border-white/5 font-mono text-[10px] tracking-wide select-none">
-              <Usb size={11} className={usbConnected ? "text-emerald-400 animate-pulse" : "text-slate-600"} />
+            <div className="flex items-center gap-1.5 px-2.5 py-1 bg-white/[0.03] rounded-lg border border-white/[0.06] font-mono text-[10px] tracking-wide select-none">
+              <Usb size={11} className={usbConnected ? "text-emerald-400" : "text-slate-600"} />
               <span className={usbConnected ? "text-emerald-400 font-bold" : "text-slate-500 font-medium"}>
                 {usbConnected ? "USB SYNCED" : "USB OFF"}
               </span>
@@ -374,14 +374,14 @@ export default function App() {
         </div>
 
         {/* --- DYNAMIC MIDDLE NAVIGATION TAB SWITCHER (DESKTOP MODE) --- */}
-        <nav className="hidden lg:flex items-center gap-1.5 bg-[#0f0f0f] p-1 rounded-xl border border-white/5">
+        <nav className="hidden lg:flex items-center gap-1 bg-[#0f0f0f]/60 p-1 rounded-xl border border-white/[0.06] backdrop-blur-sm">
           <button
             id="nav-tab-sales"
             onClick={() => setActiveTab('sales')}
-            className={`px-4 py-2 rounded-lg text-xs font-medium tracking-wide transition-all ${
+            className={`px-4 py-2 rounded-lg text-xs font-medium tracking-wide transition-all duration-200 ${
               activeTab === 'sales'
-                ? 'bg-indigo-600 text-white font-medium shadow shadow-indigo-600/25'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                ? 'bg-indigo-600 text-white font-semibold shadow-lg shadow-indigo-600/25 scale-[1.02]'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-white/[0.05]'
             }`}
           >
             Sales Desk
@@ -390,10 +390,10 @@ export default function App() {
           <button
             id="nav-tab-inventory"
             onClick={() => setActiveTab('inventory')}
-            className={`px-4 py-2 rounded-lg text-xs font-medium tracking-wide transition-all ${
+            className={`px-4 py-2 rounded-lg text-xs font-medium tracking-wide transition-all duration-200 ${
               activeTab === 'inventory'
-                ? 'bg-indigo-600 text-white font-medium shadow shadow-indigo-600/25'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                ? 'bg-indigo-600 text-white font-semibold shadow-lg shadow-indigo-600/25 scale-[1.02]'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-white/[0.05]'
             }`}
           >
             Inventory Master
@@ -404,10 +404,10 @@ export default function App() {
               <button
                 id="nav-tab-expenses"
                 onClick={() => setActiveTab('expenses')}
-                className={`px-4 py-2 rounded-lg text-xs font-medium tracking-wide transition-all ${
+                className={`px-4 py-2 rounded-lg text-xs font-medium tracking-wide transition-all duration-200 ${
                   activeTab === 'expenses'
-                    ? 'bg-indigo-600 text-white font-medium shadow shadow-indigo-600/25'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                    ? 'bg-indigo-600 text-white font-semibold shadow-lg shadow-indigo-600/25 scale-[1.02]'
+                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/[0.05]'
                 }`}
               >
                 Expenses Ledger
@@ -416,10 +416,10 @@ export default function App() {
               <button
                 id="nav-tab-reports"
                 onClick={() => setActiveTab('reports')}
-                className={`px-4 py-2 rounded-lg text-xs font-medium tracking-wide transition-all ${
+                className={`px-4 py-2 rounded-lg text-xs font-medium tracking-wide transition-all duration-200 ${
                   activeTab === 'reports'
-                    ? 'bg-indigo-600 text-white font-medium shadow shadow-indigo-600/25'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                    ? 'bg-indigo-600 text-white font-semibold shadow-lg shadow-indigo-600/25 scale-[1.02]'
+                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/[0.05]'
                 }`}
               >
                 P&L Reports
@@ -428,10 +428,10 @@ export default function App() {
               <button
                 id="nav-tab-users"
                 onClick={() => setActiveTab('users')}
-                className={`px-4 py-2 rounded-lg text-xs font-medium tracking-wide transition-all ${
+                className={`px-4 py-2 rounded-lg text-xs font-medium tracking-wide transition-all duration-200 ${
                   activeTab === 'users'
-                    ? 'bg-indigo-600 text-white font-medium shadow shadow-indigo-600/25'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                    ? 'bg-indigo-600 text-white font-semibold shadow-lg shadow-indigo-600/25 scale-[1.02]'
+                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/[0.05]'
                 }`}
               >
                 Operators
@@ -444,7 +444,7 @@ export default function App() {
         <button
           id="logout-btn"
           onClick={() => setShowLogoutConfirm(true)}
-          className="px-3.5 py-1.5 h-9 bg-white/5 hover:bg-red-950/20 text-slate-400 hover:text-red-400 border border-white/5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-colors"
+          className="px-3.5 py-1.5 h-9 bg-white/[0.04] hover:bg-red-950/30 text-slate-400 hover:text-red-400 border border-white/[0.06] rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all duration-200 hover:scale-[1.02]"
         >
           <LogOut size={14} /> Exit System
         </button>
