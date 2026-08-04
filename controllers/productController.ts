@@ -6,6 +6,7 @@ import {
   getAllProducts,
   getProductsPaginated,
   getProductByBarcode,
+  getProductById,
   createProduct,
   updateProduct,
   deleteProduct
@@ -17,14 +18,11 @@ export const getProducts = asyncHandler(async (req: Request, res: Response) => {
   const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : undefined;
   const search = req.query.search as string | undefined;
   
-  // If pagination params provided, use new optimized method
-  if (page !== undefined || limit !== undefined) {
-    const result = getProductsPaginated(page || 1, limit || 50, search);
-    return res.json(result);
-  }
-  
-  // Otherwise, preserve backward compatibility with legacy method
-  res.json(getAllProducts());
+  // Use paginated method by default with reasonable limits
+  const pageNum = page || 1;
+  const limitNum = limit || 50;
+  const result = getProductsPaginated(pageNum, limitNum, search);
+  return res.json(result);
 });
 
 /**
@@ -90,8 +88,7 @@ export const putUpdateProduct = asyncHandler(async (req: Request, res: Response)
   const { id } = req.params;
   const { name, arabicName, category, barcode, price, image, variants, imagePath, purchasePrice, sellingPrice, status } = req.body;
 
-  const products = getAllProducts();
-  const existingProduct = products.find(p => p.id === id);
+  const existingProduct = getProductById(id);
   if (!existingProduct) {
     throw new AppError("Product not found / لم يتم العثور على المنتج", 404);
   }
@@ -126,8 +123,7 @@ export const putUpdateProduct = asyncHandler(async (req: Request, res: Response)
 
   updateProduct(id, updates);
 
-  const updatedProducts = getAllProducts();
-  const updatedProduct = updatedProducts.find(p => p.id === id);
+  const updatedProduct = getProductById(id);
   res.json(updatedProduct);
 });
 

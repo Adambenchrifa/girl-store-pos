@@ -439,6 +439,40 @@ class DatabaseServiceImpl {
   }
 
   /**
+   * Get single product by ID using indexed lookup
+   */
+  public getProductById(id: string): Product | null {
+    const stmt = this.db!.prepare("SELECT * FROM products WHERE id = ?");
+    const row = stmt.get(id) as any;
+    
+    if (!row) {
+      return null;
+    }
+    
+    let variants = [];
+    try {
+      variants = row.variants ? JSON.parse(row.variants) : [];
+    } catch (e) {
+      variants = [];
+    }
+    
+    return {
+      id: row.id,
+      name: row.name,
+      arabicName: row.arabicName || undefined,
+      category: row.category || undefined,
+      barcode: row.barcode || undefined,
+      price: row.price,
+      image: row.image || undefined,
+      variants: variants,
+      imagePath: row.imagePath || undefined,
+      purchasePrice: row.purchasePrice !== null ? row.purchasePrice : undefined,
+      sellingPrice: row.sellingPrice !== null ? row.sellingPrice : undefined,
+      status: row.status || undefined
+    };
+  }
+
+  /**
    * Get single product by barcode using indexed lookup
    */
   public getProductByBarcode(barcode: string): Product | null {
@@ -469,6 +503,44 @@ class DatabaseServiceImpl {
       purchasePrice: row.purchasePrice !== null ? row.purchasePrice : undefined,
       sellingPrice: row.sellingPrice !== null ? row.sellingPrice : undefined,
       status: row.status || undefined
+    };
+  }
+
+  /**
+   * Get single sale by ID using indexed lookup
+   */
+  public getSaleById(id: string): Sale | null {
+    const stmt = this.db!.prepare("SELECT * FROM sales WHERE id = ?");
+    const row = stmt.get(id) as any;
+    
+    if (!row) {
+      return null;
+    }
+    
+    let items = [];
+    try {
+      items = row.items ? JSON.parse(row.items) : [];
+    } catch (e) {
+      items = [];
+    }
+    
+    return {
+      id: row.id,
+      receiptNo: row.receiptNo,
+      dateTime: row.dateTime,
+      userId: row.userId || undefined,
+      staffName: row.staffName || undefined,
+      items: items,
+      subtotal: row.subtotal,
+      discountType: row.discountType || undefined,
+      discountValue: row.discountValue !== null ? row.discountValue : undefined,
+      discountAmount: row.discountAmount !== null ? row.discountAmount : undefined,
+      taxRate: row.taxRate !== null ? row.taxRate : undefined,
+      taxAmount: row.taxAmount !== null ? row.taxAmount : undefined,
+      total: row.total,
+      paymentMethod: row.paymentMethod || undefined,
+      amountPaid: row.amountPaid !== null ? row.amountPaid : undefined,
+      change: row.change !== null ? row.change : undefined
     };
   }
 

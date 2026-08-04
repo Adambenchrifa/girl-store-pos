@@ -1,10 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
-@theme {
+@theme inline {
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Playfair Display", ui-serif, Georgia, serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  /* Neutres - Structure & Fond */
+  --color-bg-main: #09090b;
+  --color-surface-card: #18181b;
+  --color-surface-hover: #27272a;
+  --color-surface-elevated: #1c1c1f;
+  --color-border-subtle: #3f3f46;
+  --color-border-focus: #6366f1;
+  --color-text-primary: #f4f4f5;
+  --color-text-secondary: #a1a1aa;
+  --color-text-muted: #52525b;
+  
+  /* Accents & Actions - Marque */
+  --color-accent-primary: #6366f1;
+  --color-accent-primary-glow: #818cf8;
+  --color-accent-secondary: #ec4899;
+  
+  /* Sémantiques - États & Feedback */
+  --color-status-success: #10b981;
+  --color-status-warning: #f59e0b;
+  --color-status-danger: #ef4444;
+  --color-status-info: #3b82f6;
 }
 
 /* Custom scrollbars for a clean dark background interface */
@@ -26,6 +48,36 @@
   background: rgba(255, 255, 255, 0.15);
 }
 
+/* Classes utilitaires réutilisables du Design System */
+.input-base {
+  @apply w-full h-11 px-4 rounded-xl bg-bg-main border border-border-subtle 
+         text-text-primary placeholder:text-text-muted
+         focus:outline-none focus:border-accent-primary focus:ring-1 focus:ring-accent-primary
+         transition-all duration-200;
+}
+
+.card-base {
+  @apply bg-surface-card border border-border-subtle rounded-xl p-6 
+         shadow-sm backdrop-blur-sm;
+}
+
+.btn-primary {
+  @apply bg-accent-primary text-white hover:bg-accent-primary-glow 
+         active:scale-[0.98] shadow-lg shadow-indigo-500/20
+         disabled:bg-white/5 disabled:text-text-muted
+         transition-all duration-200 font-semibold;
+}
+
+.btn-secondary {
+  @apply bg-surface-card border border-border-subtle text-text-primary 
+         hover:bg-surface-hover active:scale-[0.98]
+         transition-all duration-200 font-medium;
+}
+
+.badge-base {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+}
+
 /* Custom fade-in style rules for modal overlays and printed receipts */
 @media print {
   body * {
@@ -45,4 +97,8 @@
     color: black !important;
     font-family: monospace !important;
   }
+}
+
+body {
+  @apply bg-bg-main text-text-primary antialiased;
 }
