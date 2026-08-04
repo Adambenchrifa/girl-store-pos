@@ -8,7 +8,8 @@ import {
   getSalesPaginated,
   createSale,
   getAllProducts,
-  getSalesCount
+  getSalesCount,
+  getProductById
 } from "../database";
 
 export const getSales = asyncHandler(async (req: Request, res: Response) => {
@@ -18,14 +19,11 @@ export const getSales = asyncHandler(async (req: Request, res: Response) => {
   const startDate = req.query.startDate as string | undefined;
   const endDate = req.query.endDate as string | undefined;
   
-  // If pagination params provided, use new optimized method
-  if (page !== undefined || limit !== undefined) {
-    const result = getSalesPaginated(page || 1, limit || 50, startDate, endDate);
-    return res.json(result);
-  }
-  
-  // Otherwise, preserve backward compatibility with legacy method
-  res.json(getAllSales());
+  // Use paginated method by default with reasonable limits
+  const pageNum = page || 1;
+  const limitNum = limit || 50;
+  const result = getSalesPaginated(pageNum, limitNum, startDate, endDate);
+  return res.json(result);
 });
 
 export const postCreateSale = asyncHandler(async (req: Request, res: Response) => {
@@ -38,7 +36,6 @@ export const postCreateSale = asyncHandler(async (req: Request, res: Response) =
     throw new AppError("Sale must contain at least one checkout item / يجب أن تحتوي عملية البيع على منتج واحد على الأقل", 400);
   }
 
-  const products = getAllProducts();
   const lowStockAlerts: string[] = [];
   const saleItems: SaleItem[] = [];
   let subtotal = 0;
@@ -50,7 +47,7 @@ export const postCreateSale = asyncHandler(async (req: Request, res: Response) =
       throw new AppError("Invalid item fields inside transaction checkout list / تفاصيل المنتج غير صالحة في قائمة الدفع", 400);
     }
 
-    const prod = products.find(p => p.id === productId);
+    const prod = getProductById(productId);
     if (!prod) {
       throw new AppError(`Product with ID '${productId}' not found in catalog / المنتج غير موجود في الكتالوج`, 404);
     }
@@ -136,7 +133,19 @@ export const postCreateSale = asyncHandler(async (req: Request, res: Response) =
   };
 
   // 4. Save atoms atomically to the local storage using createSale (which updates products & registers the sale)
-  createSale(newSale, products);
+  // Build updatedProducts array by collecting all modified products
+  const updatedProductsMap = new Map<string, Product>();
+  
+  // Add all modified products from the loop
+  for (const item of items) {
+    const { productId } = item;
+    const prod = getProductById(productId);
+    if (prod) {
+      updatedProductsMap.set(prod.id, prod);
+    }
+  }
+  
+  createSale(newSale, Array.from(updatedProductsMap.values()));
 
   // 5. Log the sales transaction using LoggerService
   LoggerService.logSale(

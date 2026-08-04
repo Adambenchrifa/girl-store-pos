@@ -336,16 +336,16 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0F0F0F] text-slate-200 font-sans flex flex-col select-none">
+    <div className="min-h-screen bg-bg-main text-text-primary font-sans flex flex-col select-none">
       
       {/* --- TOP HIGH-FIDELITY BRAND BANNER HEADER --- */}
-      <header className="bg-[#161616] border-b border-white/5 h-16 shrink-0 flex items-center justify-between px-6 relative z-30 shadow-md">
+      <header className="bg-surface-card border-b border-border-subtle h-16 shrink-0 flex items-center justify-between px-6 relative z-30 shadow-md">
         
         {/* Brand name and user info */}
         <div className="flex items-center gap-4">
           <div className="flex flex-col">
-            <h1 className="font-sans text-xl tracking-tight text-white font-light">
-              GIRL STORE <span className="text-indigo-500 font-bold italic ml-1">.</span>
+            <h1 className="font-sans text-xl tracking-tight text-text-primary font-light">
+              GIRL STORE <span className="text-accent-primary font-bold italic ml-1">.</span>
             </h1>
           </div>
 
@@ -353,20 +353,20 @@ export default function App() {
 
           {/* User label and Role badges */}
           <div className="hidden sm:flex items-center gap-2.5">
-            <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse border border-emerald-950" />
-            <span className="text-xs font-medium text-slate-400">
-              Active: <span className="text-slate-200 capitalize font-semibold">{currentUser.name}</span>
+            <div className="w-2.5 h-2.5 rounded-full bg-status-success animate-pulse border border-emerald-950" />
+            <span className="text-xs font-medium text-text-secondary">
+              Active: <span className="text-text-primary capitalize font-semibold">{currentUser.name}</span>
             </span>
             <span className={`text-[9px] uppercase tracking-wider font-mono font-bold px-2 py-0.5 rounded-md border ${
-              isAdmin ? 'bg-indigo-600/10 text-indigo-400 border-indigo-500/25' : 'bg-[#121212] text-slate-400 border-white/5'
+              isAdmin ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/25' : 'bg-surface-card text-text-secondary border-border-subtle'
             }`}>
               {currentUser.role}
             </span>
 
             {/* USB Sync Status Indicator */}
-            <div className="flex items-center gap-1.5 px-2.5 py-1 bg-black/25 rounded-lg border border-white/5 font-mono text-[10px] tracking-wide select-none">
-              <Usb size={11} className={usbConnected ? "text-emerald-400 animate-pulse" : "text-slate-600"} />
-              <span className={usbConnected ? "text-emerald-400 font-bold" : "text-slate-500 font-medium"}>
+            <div className="flex items-center gap-1.5 px-2.5 py-1 bg-black/25 rounded-lg border border-border-subtle font-mono text-[10px] tracking-wide select-none">
+              <Usb size={11} className={usbConnected ? "text-status-success animate-pulse" : "text-text-muted"} />
+              <span className={usbConnected ? "text-status-success font-bold" : "text-text-muted font-medium"}>
                 {usbConnected ? "USB SYNCED" : "USB OFF"}
               </span>
             </div>
@@ -374,14 +374,14 @@ export default function App() {
         </div>
 
         {/* --- DYNAMIC MIDDLE NAVIGATION TAB SWITCHER (DESKTOP MODE) --- */}
-        <nav className="hidden lg:flex items-center gap-1.5 bg-[#0f0f0f] p-1 rounded-xl border border-white/5">
+        <nav className="hidden lg:flex items-center gap-1.5 bg-bg-main p-1 rounded-xl border border-border-subtle">
           <button
             id="nav-tab-sales"
             onClick={() => setActiveTab('sales')}
             className={`px-4 py-2 rounded-lg text-xs font-medium tracking-wide transition-all ${
               activeTab === 'sales'
-                ? 'bg-indigo-600 text-white font-medium shadow shadow-indigo-600/25'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                ? 'bg-accent-primary text-white font-medium shadow shadow-indigo-600/25'
+                : 'text-text-secondary hover:text-text-primary hover:bg-white/5'
             }`}
           >
             Sales Desk
@@ -392,8 +392,8 @@ export default function App() {
             onClick={() => setActiveTab('inventory')}
             className={`px-4 py-2 rounded-lg text-xs font-medium tracking-wide transition-all ${
               activeTab === 'inventory'
-                ? 'bg-indigo-600 text-white font-medium shadow shadow-indigo-600/25'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                ? 'bg-accent-primary text-white font-medium shadow shadow-indigo-600/25'
+                : 'text-text-secondary hover:text-text-primary hover:bg-white/5'
             }`}
           >
             Inventory Master
@@ -406,8 +406,8 @@ export default function App() {
                 onClick={() => setActiveTab('expenses')}
                 className={`px-4 py-2 rounded-lg text-xs font-medium tracking-wide transition-all ${
                   activeTab === 'expenses'
-                    ? 'bg-indigo-600 text-white font-medium shadow shadow-indigo-600/25'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                    ? 'bg-accent-primary text-white font-medium shadow shadow-indigo-600/25'
+                    : 'text-text-secondary hover:text-text-primary hover:bg-white/5'
                 }`}
               >
                 Expenses Ledger
@@ -418,8 +418,8 @@ export default function App() {
                 onClick={() => setActiveTab('reports')}
                 className={`px-4 py-2 rounded-lg text-xs font-medium tracking-wide transition-all ${
                   activeTab === 'reports'
-                    ? 'bg-indigo-600 text-white font-medium shadow shadow-indigo-600/25'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                    ? 'bg-accent-primary text-white font-medium shadow shadow-indigo-600/25'
+                    : 'text-text-secondary hover:text-text-primary hover:bg-white/5'
                 }`}
               >
                 P&L Reports
@@ -430,8 +430,8 @@ export default function App() {
                 onClick={() => setActiveTab('users')}
                 className={`px-4 py-2 rounded-lg text-xs font-medium tracking-wide transition-all ${
                   activeTab === 'users'
-                    ? 'bg-indigo-600 text-white font-medium shadow shadow-indigo-600/25'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                    ? 'bg-accent-primary text-white font-medium shadow shadow-indigo-600/25'
+                    : 'text-text-secondary hover:text-text-primary hover:bg-white/5'
                 }`}
               >
                 Operators
@@ -444,14 +444,14 @@ export default function App() {
         <button
           id="logout-btn"
           onClick={() => setShowLogoutConfirm(true)}
-          className="px-3.5 py-1.5 h-9 bg-white/5 hover:bg-red-950/20 text-slate-400 hover:text-red-400 border border-white/5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-colors"
+          className="px-3.5 py-1.5 h-9 bg-white/5 hover:bg-red-950/20 text-text-secondary hover:text-status-danger border border-border-subtle rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-colors"
         >
           <LogOut size={14} /> Exit System
         </button>
       </header>
 
       {/* --- RESPONSIVE TAB OVERLAY STRIP (MOBILE VIEWPORT) --- */}
-      <div className="lg:hidden bg-[#0f0f0f] p-2 border-b border-white/5 flex overflow-x-auto gap-1 gap-y-1 scrollbar-none">
+      <div className="lg:hidden bg-surface-card p-2 border-b border-border-subtle flex overflow-x-auto gap-1 gap-y-1 scrollbar-none">
         {[
           { key: 'sales', label: 'Sales Desk', roleCheck: true },
           { key: 'inventory', label: 'Inventory', roleCheck: true },
@@ -505,11 +505,11 @@ export default function App() {
             <div className="lg:col-span-7 flex flex-col gap-6 overflow-hidden min-h-[400px]">
               
               {/* FILTERING HEADER BAR */}
-              <div className="bg-[#161616] p-4 rounded-2xl border border-white/5 flex flex-col md:flex-row gap-3 items-stretch justify-between shadow-sm">
+              <div className="bg-surface-card p-4 rounded-2xl border border-border-subtle flex flex-col md:flex-row gap-3 items-stretch justify-between shadow-sm">
                 
                 {/* Search Text Pill */}
                 <div className="relative flex-1">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted">
                     <Search size={16} />
                   </span>
                   <input
@@ -518,7 +518,7 @@ export default function App() {
                     placeholder="Search Article by name, category or barcode..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 focus:border-indigo-500 rounded-xl py-2 pl-9 pr-16 text-xs text-slate-200 outline-none transition-all placeholder-slate-500"
+                    className="w-full bg-bg-main border border-border-subtle focus:border-accent-primary rounded-xl py-2 pl-9 pr-16 text-xs text-text-primary outline-none transition-all placeholder-text-muted"
                   />
                   {searchQuery && (
                     <button
@@ -527,7 +527,7 @@ export default function App() {
                         setSearchQuery('');
                         setBarcodeInput('');
                       }}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-mono font-bold text-red-400 hover:text-red-300 transition-colors cursor-pointer uppercase"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-mono font-bold text-status-danger hover:text-red-300 transition-colors cursor-pointer uppercase"
                     >
                       CLEAR
                     </button>
@@ -537,7 +537,7 @@ export default function App() {
                 {/* Barcode scanner quick submit simulation container */}
                 <form onSubmit={handleBarcodeSubmit} className="flex gap-2">
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted">
                       <Barcode size={15} />
                     </span>
                     <input
@@ -546,13 +546,13 @@ export default function App() {
                       placeholder="Simulate tag scan..."
                       value={barcodeInput}
                       onChange={(e) => setBarcodeInput(e.target.value)}
-                      className="w-[140px] bg-white/5 border border-white/10 focus:border-indigo-500 rounded-xl py-2 pl-9 pr-3 text-xs text-slate-200 font-mono outline-none placeholder-slate-500"
+                      className="w-[140px] bg-bg-main border border-border-subtle focus:border-accent-primary rounded-xl py-2 pl-9 pr-3 text-xs text-text-primary font-mono outline-none placeholder-text-muted"
                     />
                   </div>
                   <button
                     id="trigger-scanner-simulation"
                     type="submit"
-                    className="px-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold transition-all shadow-md shadow-indigo-600/15"
+                    className="px-4 bg-accent-primary hover:bg-accent-primary-glow text-white rounded-xl text-xs font-semibold transition-all shadow-md shadow-indigo-600/15"
                   >
                     Scan
                   </button>
@@ -564,25 +564,25 @@ export default function App() {
               <div className="flex-1 overflow-y-auto pr-1">
                 {searchQuery.trim() === '' ? (
                   /* empty state screen when opened */
-                  <div className="h-full flex flex-col items-center justify-center p-8 border border-dashed border-white/5 rounded-3xl min-h-[350px] bg-white/[0.01]">
-                    <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center text-slate-600 mb-4">
+                  <div className="h-full flex flex-col items-center justify-center p-8 border border-dashed border-border-subtle rounded-3xl min-h-[350px] bg-white/[0.01]">
+                    <div className="w-14 h-14 rounded-2xl bg-white/5 border border-border-subtle flex items-center justify-center text-text-muted mb-4">
                       <Barcode size={26} />
                     </div>
-                    <p className="text-xs font-mono text-slate-400 font-bold tracking-wider uppercase mb-1">
+                    <p className="text-xs font-mono text-text-secondary font-bold tracking-wider uppercase mb-1">
                       Scan-To-Display Enabled
                     </p>
-                    <p className="text-[11px] text-slate-500 text-center max-w-sm leading-relaxed">
+                    <p className="text-[11px] text-text-muted text-center max-w-sm leading-relaxed">
                       Main content area is empty by default. Scan a physical barcode tag or type the article code/name above to dynamically reveal sleepwear details.
                     </p>
                   </div>
                 ) : filteredProducts.length === 0 ? (
-                  <div className="py-24 text-center text-slate-500 text-xs italic bg-[#161616] rounded-2xl border border-white/5">
+                  <div className="py-24 text-center text-text-muted text-xs italic bg-surface-card rounded-2xl border border-border-subtle">
                     No sleepwear articles matched "{searchQuery}" inside the warehouse inventory system.
                   </div>
                 ) : (
                   <div className="space-y-4">
                     <div className="flex items-center justify-between px-1">
-                      <span className="text-[10px] font-mono uppercase tracking-wider text-indigo-400 font-bold">
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-accent-primary font-bold">
                         Dynamic Scan Result ({filteredProducts.length} Match{filteredProducts.length > 1 ? 'es' : ''})
                       </span>
                       <button
@@ -590,7 +590,7 @@ export default function App() {
                           setSearchQuery('');
                           setBarcodeInput('');
                         }}
-                        className="text-[10px] font-mono text-slate-500 hover:text-red-400 transition-colors uppercase cursor-pointer"
+                        className="text-[10px] font-mono text-text-muted hover:text-status-danger transition-colors uppercase cursor-pointer"
                       >
                         [Clear Scan]
                       </button>
@@ -604,12 +604,12 @@ export default function App() {
                           <div
                             key={product.id}
                             id={`catalogue-card-${product.id}`}
-                            className="bg-[#161616] border border-white/5 hover:border-indigo-500/50 rounded-2xl overflow-hidden transition-all duration-300 relative flex flex-col h-full shadow-lg"
+                            className="bg-surface-card border border-border-subtle hover:border-accent-primary/50 rounded-2xl overflow-hidden transition-all duration-300 relative flex flex-col h-full shadow-lg"
                           >
                             {/* Product Image Frame */}
                             <div 
                               onClick={() => setZoomedImage({ src: product.image, alt: product.name, name: product.name, price: product.price })}
-                              className="aspect-video bg-black/40 overflow-hidden relative border-b border-white/5 group cursor-zoom-in"
+                              className="aspect-video bg-black/40 overflow-hidden relative border-b border-border-subtle group cursor-zoom-in"
                             >
                               <img
                                 src={product.image}
@@ -620,21 +620,21 @@ export default function App() {
                               
                               {/* Sleek Zoom Hover Overlay */}
                               <div className="absolute inset-0 bg-black/45 opacity-0 group-hover:opacity-100 transition-opacity duration-250 flex flex-col items-center justify-center gap-2">
-                                <div className="p-2.5 bg-black/60 backdrop-blur-md border border-white/10 rounded-full text-white shadow-lg">
+                                <div className="p-2.5 bg-black/60 backdrop-blur-md border border-border-subtle rounded-full text-white shadow-lg">
                                   <Search size={16} />
                                 </div>
-                                <span className="text-[10px] font-mono tracking-wider text-white bg-black/65 backdrop-blur-md px-2.5 py-1 border border-white/10 rounded-full font-bold uppercase">
+                                <span className="text-[10px] font-mono tracking-wider text-white bg-black/65 backdrop-blur-md px-2.5 py-1 border border-border-subtle rounded-full font-bold uppercase">
                                   Click to Zoom
                                 </span>
                               </div>
 
                               <div className="absolute top-2.5 right-2.5 z-10">
                                 {totalStock > 0 ? (
-                                  <span className="text-[8px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 py-0.5 px-1.5 rounded-full font-bold uppercase">
+                                  <span className="text-[8px] font-mono bg-status-success/10 text-status-success border border-status-success/20 py-0.5 px-1.5 rounded-full font-bold uppercase">
                                     IN STOCK ({totalStock})
                                   </span>
                                 ) : (
-                                  <span className="text-[8px] font-mono bg-red-500/10 text-red-400 border border-red-500/20 py-0.5 px-1.5 rounded-full font-bold uppercase">
+                                  <span className="text-[8px] font-mono bg-status-danger/10 text-status-danger border border-status-danger/20 py-0.5 px-1.5 rounded-full font-bold uppercase">
                                     OUT OF STOCK
                                   </span>
                                 )}
@@ -644,24 +644,24 @@ export default function App() {
                             {/* Box textual details */}
                             <div className="p-4 flex-1 flex flex-col justify-between space-y-4">
                               <div className="space-y-1">
-                                <span className="text-[9px] font-mono uppercase tracking-widest text-indigo-400 font-semibold">
+                                <span className="text-[9px] font-mono uppercase tracking-widest text-accent-primary font-semibold">
                                   {product.category}
                                 </span>
-                                <h3 className="text-sm text-white font-normal line-clamp-2 leading-snug">
+                                <h3 className="text-sm text-text-primary font-normal line-clamp-2 leading-snug">
                                   {product.name}
                                 </h3>
                               </div>
 
-                              <div className="flex items-center justify-between border-t border-white/5 pt-3">
+                              <div className="flex items-center justify-between border-t border-border-subtle pt-3">
                                 <div className="flex flex-col">
-                                  <span className="text-[9px] font-mono uppercase text-slate-500">Retail price</span>
-                                  <span className="text-sm font-semibold text-indigo-400 font-mono">
+                                  <span className="text-[9px] font-mono uppercase text-text-muted">Retail price</span>
+                                  <span className="text-sm font-semibold text-accent-primary font-mono">
                                     {product.price.toFixed(2)} DH
                                   </span>
                                 </div>
                                 <div className="flex flex-col text-right">
-                                  <span className="text-[9px] font-mono uppercase text-slate-500">Available Stock</span>
-                                  <span className="text-xs font-mono text-slate-350">
+                                  <span className="text-[9px] font-mono uppercase text-text-muted">Available Stock</span>
+                                  <span className="text-xs font-mono text-text-secondary">
                                     {totalStock} units
                                   </span>
                                 </div>
@@ -671,7 +671,7 @@ export default function App() {
                               <button
                                 id={`add-revealed-article-${product.id}`}
                                 onClick={() => handleAddProductToCart(product, 1)}
-                                className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold uppercase transition-all shadow-md shadow-indigo-600/15 cursor-pointer hover:scale-[1.01]"
+                                className="w-full py-2.5 bg-accent-primary hover:bg-accent-primary-glow text-white rounded-xl text-xs font-bold uppercase transition-all shadow-md shadow-indigo-600/15 cursor-pointer hover:scale-[1.01]"
                               >
                                 Add to Order
                               </button>
@@ -687,32 +687,32 @@ export default function App() {
             </div>
 
             {/* RIGHT 5-COLUMN PANEL: ACTIVE RECEIPT BASKET REGISTER (visual match) */}
-            <div className="lg:col-span-5 bg-[#161616] border border-white/5 rounded-3xl flex flex-col overflow-hidden min-h-[400px] shadow-2xl">
+            <div className="lg:col-span-5 bg-surface-card border border-border-subtle rounded-3xl flex flex-col overflow-hidden min-h-[400px] shadow-2xl">
               
               {/* Basket Branded Header */}
-              <div className="p-5 border-b border-white/5 bg-black/15 text-center relative shrink-0">
-                <h3 className="font-sans text-lg tracking-tight text-white font-light">
-                  GIRL STORE <span className="text-indigo-500 font-bold italic ml-1">.</span>
+              <div className="p-5 border-b border-border-subtle bg-black/15 text-center relative shrink-0">
+                <h3 className="font-sans text-lg tracking-tight text-text-primary font-light">
+                  GIRL STORE <span className="text-accent-primary font-bold italic ml-1">.</span>
                 </h3>
-                <div className="h-[2px] w-8 bg-indigo-500 mx-auto mt-3" />
+                <div className="h-[2px] w-8 bg-accent-primary mx-auto mt-3" />
               </div>
 
               {/* Basket Scrolling grid - displaying Article Name, Qty, Price, Total */}
               <div className="flex-1 overflow-y-auto p-4 space-y-3">
                 {cart.length === 0 ? (
                   <div className="h-full flex flex-col items-center justify-center p-6 text-center space-y-2">
-                    <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-slate-500 border border-white/5">
+                    <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-text-muted border border-border-subtle">
                       <Calculator size={18} />
                     </div>
-                    <h4 className="text-xs font-semibold text-slate-400">Register Empty</h4>
-                    <p className="text-[10px] text-slate-500 leading-relaxed max-w-[200px]">
+                    <h4 className="text-xs font-semibold text-text-secondary">Register Empty</h4>
+                    <p className="text-[10px] text-text-muted leading-relaxed max-w-[200px]">
                       Articles selected from the left apparel catalog grid will accumulate here for checkout tendering.
                     </p>
                   </div>
                 ) : (
                   <div className="space-y-2.5">
                     {/* Headers */}
-                    <div className="grid grid-cols-12 gap-1 text-[9px] font-mono uppercase tracking-wider text-slate-500 font-bold border-b border-white/5 pb-1.5">
+                    <div className="grid grid-cols-12 gap-1 text-[9px] font-mono uppercase tracking-wider text-text-muted font-bold border-b border-border-subtle pb-1.5">
                       <span className="col-span-6">Article Name</span>
                       <span className="col-span-2 text-center">Qty</span>
                       <span className="col-span-2 text-right">Price</span>
@@ -723,10 +723,10 @@ export default function App() {
                       <div 
                         key={`${item.product.id}-${item.variant.sku}`} 
                         id={`cart-line-${idx}`}
-                        className="grid grid-cols-12 gap-1 items-center bg-white/5 p-2.5 rounded-xl border border-white/5 hover:border-indigo-500/30 transition-all text-xs"
+                        className="grid grid-cols-12 gap-1 items-center bg-white/5 p-2.5 rounded-xl border border-border-subtle hover:border-accent-primary/30 transition-all text-xs"
                       >
                         <div className="col-span-6 flex flex-col">
-                          <span className="font-semibold text-slate-200 truncate">{item.product.name}</span>
+                          <span className="font-semibold text-text-primary truncate">{item.product.name}</span>
                         </div>
 
                         {/* Qty increment controls */}
@@ -734,34 +734,34 @@ export default function App() {
                           <button
                             id={`qty-dec-cart-${idx}`}
                             onClick={() => updateCartQty(idx, -1)}
-                            className="w-5 h-5 rounded bg-white/5 border border-white/10 text-slate-400 hover:text-white flex items-center justify-center text-[11px]"
+                            className="w-5 h-5 rounded bg-white/5 border border-border-subtle text-text-secondary hover:text-text-primary flex items-center justify-center text-[11px]"
                           >
                             -
                           </button>
-                          <span className="font-mono text-slate-200 text-center font-bold min-w-4 text-[10px]">
+                          <span className="font-mono text-text-primary text-center font-bold min-w-4 text-[10px]">
                             {item.quantity}
                           </span>
                           <button
                             id={`qty-inc-cart-${idx}`}
                             onClick={() => updateCartQty(idx, 1)}
-                            className="w-5 h-5 rounded bg-white/5 border border-white/10 text-slate-400 hover:text-white flex items-center justify-center text-[11px]"
+                            className="w-5 h-5 rounded bg-white/5 border border-border-subtle text-text-secondary hover:text-text-primary flex items-center justify-center text-[11px]"
                           >
                             +
                           </button>
                         </div>
 
-                        <span className="col-span-2 text-right font-mono text-[10px] text-slate-400">
+                        <span className="col-span-2 text-right font-mono text-[10px] text-text-secondary">
                           {item.product.price.toFixed(2)} DH
                         </span>
                         
-                        <div className="col-span-2 flex items-center justify-end gap-1 font-mono text-slate-150 font-semibold relative group">
+                        <div className="col-span-2 flex items-center justify-end gap-1 font-mono text-text-primary font-semibold relative group">
                           <span>{(item.product.price * item.quantity).toFixed(2)} DH</span>
                           
                           {/* Instant lines write-off button */}
                           <button
                             id={`remove-line-${idx}`}
                             onClick={() => removeCartItem(idx)}
-                            className="absolute -right-2 p-1 w-5 h-5 bg-white/5 border border-white/10 text-slate-500 hover:text-red-400 rounded cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center hover:bg-white/10"
+                            className="absolute -right-2 p-1 w-5 h-5 bg-white/5 border border-border-subtle text-text-muted hover:text-status-danger rounded cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center hover:bg-white/10"
                             title="Remove article line"
                           >
                             <Trash2 size={10} />
@@ -774,34 +774,34 @@ export default function App() {
               </div>
 
               {/* Bottom calculations & discounts settle controls panel */}
-              <div className="p-5 border-t border-white/5 bg-black/15 shrink-0 space-y-4">
+              <div className="p-5 border-t border-border-subtle bg-black/15 shrink-0 space-y-4">
                 
                 {/* 2. Subtotal and Total records */}
-                <div className="space-y-1.5 text-xs text-slate-400 font-sans">
+                <div className="space-y-1.5 text-xs text-text-secondary font-sans">
                   <div className="flex justify-between font-medium">
                     <span>Item Net Subtotal:</span>
-                    <span className="font-mono text-slate-300">{subtotal.toFixed(2)} DH</span>
+                    <span className="font-mono text-text-primary">{subtotal.toFixed(2)} DH</span>
                   </div>
                 </div>
 
                 {/* Divider */}
-                <div className="h-[1px] bg-white/5" />
+                <div className="h-[1px] bg-border-subtle" />
 
                 {/* 3. Cash tender entry & card select */}
                 <div className="grid grid-cols-2 gap-4">
                   {/* Settle pay method */}
                   <div>
-                    <label className="block text-[10px] font-mono tracking-wider uppercase text-slate-500 mb-1.5">
+                    <label className="block text-[10px] font-mono tracking-wider uppercase text-text-muted mb-1.5">
                       Tendering Method
                     </label>
-                    <div className="grid grid-cols-2 gap-2 bg-black/25 p-1 border border-white/5 rounded-xl">
+                    <div className="grid grid-cols-2 gap-2 bg-black/25 p-1 border border-border-subtle rounded-xl">
                       <button
                         id="payment-cash-btn"
                         onClick={() => { setPaymentMethod('Cash'); setAmountPaid(''); }}
                         className={`py-1.5 rounded-lg text-[10.5px] font-bold flex items-center justify-center gap-1 transition-all ${
                           paymentMethod === 'Cash'
-                            ? 'bg-indigo-600 text-white shadow shadow-indigo-600/15'
-                            : 'text-slate-400 hover:text-slate-200'
+                            ? 'bg-accent-primary text-white shadow shadow-indigo-600/15'
+                            : 'text-text-secondary hover:text-text-primary'
                         }`}
                       >
                         <DollarSign size={12} /> Cash
@@ -811,8 +811,8 @@ export default function App() {
                         onClick={() => { setPaymentMethod('Card'); setAmountPaid(''); }}
                         className={`py-1.5 rounded-lg text-[10.5px] font-bold flex items-center justify-center gap-1 transition-all ${
                           paymentMethod === 'Card'
-                            ? 'bg-indigo-600 text-white shadow shadow-indigo-600/15'
-                            : 'text-slate-400 hover:text-slate-200'
+                            ? 'bg-accent-primary text-white shadow shadow-indigo-600/15'
+                            : 'text-text-secondary hover:text-text-primary'
                         }`}
                       >
                         <CreditCard size={12} /> Card
@@ -822,11 +822,11 @@ export default function App() {
 
                   {/* Cash received calculator for change! */}
                   <div>
-                    <label className="block text-[10px] font-mono tracking-wider uppercase text-slate-500 mb-1.5">
+                    <label className="block text-[10px] font-mono tracking-wider uppercase text-text-muted mb-1.5">
                       {paymentMethod === 'Card' ? 'Card Tendering' : 'Cash Received (DH)'}
                     </label>
                     {paymentMethod === 'Card' ? (
-                      <div className="w-full bg-black/20 text-slate-500 border border-white/5 rounded-xl py-2 px-3 text-xs italic">
+                      <div className="w-full bg-black/20 text-text-muted border border-border-subtle rounded-xl py-2 px-3 text-xs italic">
                         Swipe terminal direct
                       </div>
                     ) : (
@@ -837,17 +837,17 @@ export default function App() {
                         placeholder={total.toFixed(2)}
                         value={amountPaid}
                         onChange={(e) => setAmountPaid(e.target.value)}
-                        className="w-full bg-white/5 border border-white/10 focus:border-indigo-500 rounded-xl py-2 px-3 text-xs font-mono text-slate-200 outline-none placeholder-slate-500"
+                        className="w-full bg-white/5 border border-border-subtle focus:border-accent-primary rounded-xl py-2 px-3 text-xs font-mono text-text-primary outline-none placeholder-text-muted"
                       />
                     )}
                   </div>
                 </div>
 
                 {/* 4. TOTAL & MASTER CTA EXECUTION BUTTON (corresponds to visual board) */}
-                <div className="bg-black/30 border border-white/5 rounded-2xl p-4 flex items-center justify-between shadow-inner gap-4">
+                <div className="bg-black/30 border border-border-subtle rounded-2xl p-4 flex items-center justify-between shadow-inner gap-4">
                   <div className="flex flex-col">
-                    <span className="text-[10px] font-mono text-slate-500 uppercase">Order Drawer Total</span>
-                    <span className="text-2xl font-mono text-white font-semibold tracking-tight mt-0.5">
+                    <span className="text-[10px] font-mono text-text-muted uppercase">Order Drawer Total</span>
+                    <span className="text-2xl font-mono text-text-primary font-semibold tracking-tight mt-0.5">
                       {total.toFixed(2)} DH
                     </span>
                   </div>
@@ -856,7 +856,7 @@ export default function App() {
                     id="checkout-pay-print-btn"
                     onClick={handleCheckoutSettle}
                     disabled={cart.length === 0 || isSettingUpCheckout}
-                    className="h-12 bg-indigo-600 hover:bg-indigo-500 text-white disabled:bg-white/5 disabled:text-slate-600 px-6 rounded-xl text-xs font-bold tracking-wide uppercase transition-colors shadow-lg shadow-indigo-600/20 flex items-center gap-1.5 shrink-0 hover:scale-[1.01]"
+                    className="h-12 btn-primary px-6 rounded-xl text-xs font-bold tracking-wide uppercase flex items-center gap-1.5 shrink-0"
                   >
                     {isSettingUpCheckout ? "Processing..." : "PAY / PRINT RECEIPT"}
                   </button>

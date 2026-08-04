@@ -413,6 +413,20 @@ export function getProductByBarcode(barcode: string): Product | null {
   return DatabaseService.getProductByBarcode(barcode);
 }
 
+/**
+ * Get single product by ID (new optimized method)
+ */
+export function getProductById(id: string): Product | null {
+  return DatabaseService.getProductById(id);
+}
+
+/**
+ * Get single sale by ID (new optimized method)
+ */
+export function getSaleById(id: string): Sale | null {
+  return DatabaseService.getSaleById(id);
+}
+
 export function createProduct(product: Product) {
   const db = readDatabase();
   db.products.push(product);
