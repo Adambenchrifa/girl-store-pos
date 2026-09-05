@@ -3,7 +3,7 @@ import path from "path";
 import Database from "better-sqlite3";
 import { BASE_DATA_DIR } from "../config/app";
 import { dbConfig } from "../config/index";
-import { AppDatabase, User } from "../types";
+import { AppDatabase, User, Product, Sale } from "../types";
 import { LoggerService } from "../services/LoggerService";
 
 const DEFAULT_USERS: User[] = [
