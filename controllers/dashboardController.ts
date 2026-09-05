@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
 import { asyncHandler } from "../middleware/error";
-import { getDashboardStats } from "../database";
+import { getDashboardMetrics } from "../services/dashboardService";
 
 export const getDashboardStatsHandler = asyncHandler(async (req: Request, res: Response) => {
-  // Use new optimized SQL-based dashboard stats
-  const stats = getDashboardStats();
+  const stats = getDashboardMetrics();
   res.json(stats);
 });
